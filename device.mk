@@ -28,8 +28,23 @@ $(call inherit-product, vendor/realme/RMX3191-ims/RMX3191-ims.mk)
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
-# API
+# Inherit several Android Go Configurations(Beneficial for everyone, even on non-Go devices)
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
+PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := frameworks/base/config/boot-image-profile.txt
+
+# Speed profile services and wifi-service to reduce RAM and storage
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+
+# Always preopt extracted APKs to prevent extracting out of the APK
+# for gms modules.
+PRODUCT_ALWAYS_PREOPT_EXTRACTED_APK := true
+
+
+# The first api level, device has been commercially launched on.
 PRODUCT_SHIPPING_API_LEVEL := 30
+
+# Extra VNDK Versions
+PRODUCT_EXTRA_VNDK_VERSIONS := 30
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1600
@@ -48,35 +63,6 @@ PRODUCT_COMPRESSED_APEX := false
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/apns-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
 
-# Audio
-PRODUCT_PACKAGES += \
-    android.hardware.audio@6.0.vendor \
-    android.hardware.audio.service \
-    android.hardware.audio@6.0-impl:32 \
-    android.hardware.audio.effect@6.0-impl:32 \
-    android.hardware.audio.common@6.0-util \
-    android.hardware.audio.common-util.vendor \
-    android.hardware.audio.common@6.0-util.vendor \
-    android.hardware.audio@6.0-util \
-    android.hardware.audio@6.0-util.vendor \
-    android.hardware.soundtrigger@2.3.vendor \
-    android.hardware.bluetooth.audio-impl \
-
-PRODUCT_PACKAGES += \
-    audio_policy.stub \
-    audio.bluetooth.default \
-    audio.r_submix.default \
-    audio.usb.default \
-
-PRODUCT_PACKAGES += \
-    libaudiofoundation.vendor \
-    libaudiopreprocessing \
-    libbundlewrapper \
-    libdownmix \
-    libtinycompress \
-    libalsautils \
-    libnbaio_mono
-
 PRODUCT_PACKAGES += \
     MtkInCallService
 
@@ -91,28 +77,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml
 
-# Bluetooth
-PRODUCT_PACKAGES += \
-    libbluetooth_audio_session \
-    android.hardware.bluetooth.a2dp@1.0 \
-    android.hardware.bluetooth@1.0.vendor \
-    android.hardware.bluetooth.a2dp@1.0.vendor
-
-
-# Configstore
-PRODUCT_PACKAGES += \
-    android.hardware.configstore@1.0-service \
-    android.hardware.configstore@1.1-service
-
-# Display
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@2.0-impl \
-    android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.common@1.2 \
-    android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.composer@2.1-service \
-    android.hardware.graphics.mapper@2.0-impl-2.1 \
-    libvulkan
 
 # fastbootd
 PRODUCT_PACKAGES += \
@@ -125,39 +89,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.RMX3191
     
-# DRM
-PRODUCT_PACKAGES += \
-    android.hardware.drm@1.3.vendor \
-    android.hardware.drm-service.clearkey
 
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health-service.RMX3191 \
     android.hardware.health-service.RMX3191-recovery
     
-# Gatekeeper
-PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-service \
-    android.hardware.gatekeeper@1.0.vendor \
-    android.hardware.gatekeeper@1.0-impl
 
-# GNSS
-PRODUCT_PACKAGES += \
-    android.hardware.gnss.measurement_corrections@1.1.vendor \
-    android.hardware.gnss.visibility_control@1.0.vendor \
-    android.hardware.gnss@2.1.vendor
-
-# HIDL
-PRODUCT_PACKAGES += \
-    android.hidl.allocator@1.0 \
-    android.hidl.allocator@1.0.vendor \
-    libhidltransport \
-    libhwbinder \
-    libhwbinder.vendor \
-    libhidltransport.vendor
-
-PRODUCT_PACKAGES += \
-    vndservicemanager
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -168,19 +106,6 @@ PRODUCT_COPY_FILES += \
 # KPOC
 PRODUCT_PACKAGES += \
     libsuspend
-
-# Keymaster
-PRODUCT_PACKAGES += \
-    libkeymaster4.vendor:64 \
-    libkeymaster4support.vendor:64 \
-    libkeymaster_portable.vendor:64 \
-    libkeymaster_messages.vendor:64 \
-    libsoft_attestation_cert.vendor:64 \
-    libpuresoftkeymasterdevice.vendor:64
-
-# Libxml2
-PRODUCT_PACKAGES += \
-    libxml2.vendor
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -193,17 +118,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
-
-PRODUCT_PACKAGES += \
-    libavservices_minijail_vendor \
-    libavservices_minijail.vendor
-
-# Net
-PRODUCT_PACKAGES += \
-    libpcap.vendor
-
-PRODUCT_PACKAGES += \
-    android.hardware.secure_element@1.2.vendor
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -258,21 +172,7 @@ PRODUCT_PACKAGES += \
     SecureElement \
     Tag
     
-# Power
-PRODUCT_PACKAGES += \
-    android.hardware.power-service.mediatek-libperfmgr
 
-PRODUCT_PACKAGES += \
-    libmtkperf_client_vendor \
-    libmtkperf_client
-
-PRODUCT_PACKAGES += \
-    vendor.mediatek.hardware.mtkpower@1.2-service.stub \
-    vendor.mediatek.hardware.mtkpower@1.0.vendor \
-    vendor.mediatek.hardware.mtkpower@1.1.vendor
-
-PRODUCT_PACKAGES += \
-    android.hardware.power@1.3.vendor
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/power/powercontable.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powercontable.xml \
@@ -281,7 +181,9 @@ PRODUCT_COPY_FILES += \
 
 # Properties
 -include $(DEVICE_PATH)/configs/props/system.prop
--include $(DEVICE_PATH)/configs/props/vendor.prop
+-include $(DEVICE_PATH)/system_prop.mk
+PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
+
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE := true
 
 # Public Libraries
@@ -310,78 +212,26 @@ PRODUCT_PACKAGES += \
     multi_init.rc \
     fstab.mt6768
 
-# Runtime Resource Overlays 
-PRODUCT_PACKAGES += \
-    ApertureOverlayRMX3191 \
-    CarrierConfigOverlayRMX3191 \
-    DialerOverlayRMX3191 \
-    FrameworksResOverlayRMX3191 \
-    SettingsOverlayRMX3191 \
-    SettingsProviderOverlayRMX3191 \
-    SystemUIOverlayRMX3191 \
-    TelephonyOverlayRMX3191 \
-    TetheringResOverlayRMX3191 \
-    WifiResOverlayRMX3191
-
-# Protobuf
-PRODUCT_PACKAGES += \
-    libprotobuf-cpp-full-3.9.1-vendorcompat \
-    libprotobuf-cpp-full-vendorcompat \
-    libprotobuf-cpp-lite-vendorcompat
     
+# Overlays
+DEVICE_PACKAGE_OVERLAYS += \
+    $(DEVICE_PATH)/overlay
+
+# RRO-Overlays
+PRODUCT_PACKAGES += \
+    TetheringConfigOverlay \
+    WifiOverlay
+
+
 # Seccomp
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/seccomp/,$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy)
 
-# Sensors
-PRODUCT_PACKAGES += \
-    android.frameworks.sensorservice@1.0 \
-    android.frameworks.sensorservice@1.0.vendor \
-    android.hardware.sensors@2.0.vendor
-
-PRODUCT_PACKAGES += \
-    libsensorndkbridge
 
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf \
 
-# Soong namespaces
-PRODUCT_SOONG_NAMESPACES += \
-    hardware/google/interfaces \
-    hardware/google/pixel \
-    hardware/mediatek \
-    $(DEVICE_PATH)
 
-# Text classifier
-PRODUCT_PACKAGES += \
-    libtextclassifier_hash.vendor
-
-# Thermal
-PRODUCT_PACKAGES += \
-    android.hardware.thermal@2.0.vendor \
-    android.hardware.thermal@1.0-impl
-
-# USB
-PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.RMX3191
-
-# Vibrator
-TARGET_VIBRATOR_SUPPORTS_EFFECTS := true
-PRODUCT_PACKAGES += \
-    android.hardware.vibrator-service.mediatek
-
-# VNDK
-PRODUCT_COPY_FILES += \
-    prebuilts/vndk/v32/arm64/arch-arm-armv8-a/shared/vndk-sp/android.hardware.common-V2-ndk_platform.so:$(TARGET_COPY_OUT_VENDOR)/lib/android.hardware.common-V2-ndk_platform.so \
-    prebuilts/vndk/v32/arm64/arch-arm-armv8-a/shared/vndk-sp/android.hardware.graphics.common-V2-ndk_platform.so:$(TARGET_COPY_OUT_VENDOR)/lib/android.hardware.graphics.common-V2-ndk_platform.so \
-    prebuilts/vndk/v32/arm64/arch-arm-armv8-a/shared/vndk-core/libui.so:$(TARGET_COPY_OUT_VENDOR)/lib/libui-v32.so \
-    prebuilts/vndk/v32/arm64/arch-arm-armv8-a/shared/vndk-sp/libutils.so:$(TARGET_COPY_OUT_VENDOR)/lib/libutils-v32.so \
-    prebuilts/vndk/v32/arm64/arch-arm64-armv8-a/shared/vndk-sp/libutils.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libutils-v32.so \
-    prebuilts/vndk/v30/arm64/arch-arm-armv8-a/shared/vndk-core/libmedia_helper.so:$(TARGET_COPY_OUT_VENDOR)/lib/libmedia_helper-v30.so \
-    prebuilts/vndk/v30/arm64/arch-arm-armv8-a/shared/vndk-sp/libutils.so:$(TARGET_COPY_OUT_VENDOR)/lib/libutils-v30.so \
-    prebuilts/vndk/v30/arm64/arch-arm64-armv8-a/shared/vndk-sp/libunwindstack.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libunwindstack-v30.so \
-    prebuilts/vndk/v30/arm64/arch-arm64-armv8-a/shared/vndk-core/libmedia_helper.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libmedia_helper-v30.so \
-    prebuilts/vndk/v30/arm64/arch-arm64-armv8-a/shared/vndk-sp/libutils.so:$(TARGET_COPY_OUT_VENDOR)/lib64/libutils-v30.so
 
 # Screen density
 PRODUCT_AAPT_CONFIG := xxxhdpi
@@ -394,25 +244,52 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
     Settings \
     SystemUI
 
-# Renderscript
-PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
-# Wi-Fi
+# HIDL
 PRODUCT_PACKAGES += \
-    android.hardware.wifi-service-lazy
+    libhardware \
+    libhidltransport \
+    libhwbinder
 
+# Bluetooth Audio (System-side HAL, sysbta)
 PRODUCT_PACKAGES += \
-    hostapd \
-    android.hardware.wifi@1.3.vendor \
-    android.hardware.wifi.supplicant@1.3.vendor
-
-PRODUCT_PACKAGES += \
-    libkeystore-engine-wifi-hidl \
-    libkeystore-wifi-hidl
+    audio.sysbta.default \
+    android.hardware.bluetooth.audio-service-system
 
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/wifi/,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
+    $(DEVICE_PATH)/bluetooth/audio/config/sysbta_audio_policy_configuration.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysbta_audio_policy_configuration.xml \
+    $(DEVICE_PATH)/bluetooth/audio/config/sysbta_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysbta_audio_policy_configuration_7_0.xml
+
+# DRM
+PRODUCT_PACKAGES += \
+    libdrm
+    
+
+# KPOC
+PRODUCT_PACKAGES += \
+    libsuspend
+
+# Speed up
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Launcher3QuickStep \
+    Settings \
+    SystemUI
+
+
+
+# Wi-Fi
+PRODUCT_PACKAGES += \
+    wpa_supplicant \
+    hostapd \
+    libwifi-hal-wrapper \
+    android.hardware.wifi-service
+
+
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(LOCAL_PATH)/configs/wifi/,$(TARGET_COPY_OUT_VENDOR)/etc/wifi)
+
+    
+
