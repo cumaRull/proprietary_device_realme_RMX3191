@@ -94,7 +94,7 @@ TARGET_KERNEL_SOURCE := kernel/realme/RMX3191
 TARGET_KERNEL_CONFIG := even_defconfig
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_CLANG_VERSION := proton-clang
+# TARGET_KERNEL_CLANG_VERSION := proton-clang
 TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/proton-clang
 TARGET_KERNEL_ADDITIONAL_FLAGS += HOSTCFLAGS=" -fuse-ld=lld -Wno-unused-command-line-argument"
 
