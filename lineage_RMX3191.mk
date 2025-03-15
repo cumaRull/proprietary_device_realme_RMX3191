@@ -20,7 +20,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/non_ab_device.mk)
+
 
 # Inherit from device makefile
 $(call inherit-product, device/realme/RMX3191/device.mk)
@@ -36,9 +36,6 @@ TARGET_BOOT_ANIMATION_RES := 720
 
 PRODUCT_GMS_CLIENTID_BASE := android-realme
 
-PRODUCT_SYSTEM_MODEL := RMX3191
-PRODUCT_SYSTEM_NAME := RMX3191
-PRODUCT_SYSTEM_DEVICE := RMX3191
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     TARGET_DEVICE=RMX3191 \
