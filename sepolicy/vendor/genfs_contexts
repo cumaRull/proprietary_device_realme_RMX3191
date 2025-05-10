@@ -4,9 +4,6 @@ genfscon sysfs /devices/platform/sia81xx@L                                  u:ob
 # Display
 genfscon proc  /touchpanel                                                  u:object_r:proc_tp:s0
 
-# Graphics
-genfscon sysfs /devices/platform/mtkfb@0                              u:object_r:sysfs_gpu:s0
-
 # Health
 genfscon sysfs /devices/platform/mt_charger/power_supply/ac                                                                     u:object_r:sysfs_ac_supply:s0
 genfscon sysfs /devices/platform/mt_charger/power_supply/usb                                                                    u:object_r:sysfs_usb_supply:s0
@@ -19,8 +16,8 @@ genfscon sysfs /devices/platform/mt_usb/saving                                  
 
 # OPLUS
 genfscon proc /fp_id                                                        u:object_r:proc_oplus_fp:s0
-genfscon proc /oppoVersion/prjVersion                                       u:object_r:proc_oplus_ver:s0
-genfscon proc /oppoVersion/operatorName                                     u:object_r:proc_oplus_ver:s0
+genfscon proc /oplusVersion/prjVersion                                       u:object_r:proc_oplus_ver:s0
+genfscon proc /oplusVersion/operatorName                                     u:object_r:proc_oplus_ver:s0
 genfscon proc /devinfo                                                      u:object_r:proc_oplus_devinfo:s0
 genfscon proc /oplusSensorFeature/is_support_mtk_cali                       u:object_r:proc_oplus_mtkcali:s0
 genfscon proc /oppoCustom/Sensor                                            u:object_r:proc_oplus_sensor:s0
@@ -33,7 +30,7 @@ genfscon sysfs /kernel/gpu/gpu_(min|max)_clock                              u:ob
 
 # VM
 genfscon proc /sys/vm/direct_swappiness                                     u:object_r:proc_vm:s0
-genfscon proc /sys/vm/dirty_background_bytes                                u:object_r:proc_vm:s0
+genfscon proc /sys/vm/swappiness                                u:object_r:proc_vm:s0
 
 # mmc_host
 genfscon sysfs /devices/platform/bootdevice/host0/target0:0:0/0:0:0:2/block/sdc/queue/discard_max_bytes u:object_r:sysfs_mmc_host:s0
