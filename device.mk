@@ -349,7 +349,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_SOONG_NAMESPACES += \
     hardware/google/interfaces \
     hardware/google/pixel \
-    hardware/mediatek \
     $(DEVICE_PATH)
 
 # Text classifier
@@ -364,11 +363,6 @@ PRODUCT_PACKAGES += \
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.RMX3191
-
-# Vibrator
-TARGET_VIBRATOR_SUPPORTS_EFFECTS := true
-PRODUCT_PACKAGES += \
-    android.hardware.vibrator-service.mediatek
 
 # VNDK
 PRODUCT_COPY_FILES += \
