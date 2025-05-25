@@ -77,7 +77,6 @@ DEVICE_MATRIX_FILE := $(DEVICE_PATH)/configs/manifests/compatibility_matrix.xml
 # Kernel
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += androidboot.init_fatal_reboot_target=recovery
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_OFFSET := 0x00008000
@@ -91,11 +90,9 @@ BOARD_BOOT_HEADER_VERSION := 2
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_SOURCE := kernel/realme/RMX3191
-TARGET_KERNEL_CONFIG := even_ksu_defconfig
+TARGET_KERNEL_CONFIG := even_defconfig
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_CLANG_PATH := $(shell pwd)/prebuilts/clang/host/linux-x86/mylittleclang
-TARGET_KERNEL_ADDITIONAL_FLAGS += HOSTCFLAGS=" -fuse-ld=lld -Wno-unused-command-line-argument"
-TARGET_KERNEL_LLVM_BINUTILS := false
 BOARD_KERNEL_IMAGE_NAME := Image.gz
 
 BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
