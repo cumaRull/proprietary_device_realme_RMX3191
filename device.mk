@@ -291,25 +291,19 @@ PRODUCT_COPY_FILES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    init.recovery.mt6768.rc \
-    factory_init.connectivity.rc \
-    factory_init.project.rc \
-    factory_init.rc \
-    init.aee.rc \
-    init.ago.rc \
+    perf_profile.sh \
     init.connectivity.rc \
     init.modem.rc \
     init.mt6768.rc \
     init.mt6768.usb.rc \
-    init.oppo.reserve.rc \
-    init.project.rc \
     init.sensor_1_0.rc \
-    meta_init.connectivity.rc \
-    meta_init.modem.rc \
-    meta_init.project.rc \
-    meta_init.rc \
-    multi_init.rc \
-    fstab.mt6768
+    fstab.mt6768 \
+    fstab.ramdisk \
+    ueventd.mtk.rc
+
+# Recovery
+PRODUCT_PACKAGES += \
+    init.recovery.mt6768.rc
 
 # Runtime Resource Overlays 
 PRODUCT_PACKAGES += \

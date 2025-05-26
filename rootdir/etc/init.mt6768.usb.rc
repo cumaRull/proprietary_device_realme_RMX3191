@@ -950,7 +950,3 @@ on property:persist.vendor.usb.printk=*
 	setprop vendor.usb.printk ${persist.vendor.usb.printk}
 
 ### PLATFORM VARIANT, cat $rc_file | grep write | sort | grep -vE "android0|usb20_phy" | awk '{print $2}' | uniq ###
-
-#Xianfeng.Liu@ODM_WT.BSP.Storage.acm, 2021/01/19, Modify for ATO Vcom port
-on property:ro.factory_mode=1 && property:sys.boot_completed=1 && property:ro.boot.atm=disabled
-        setprop sys.usb.config acm_gs0
